@@ -1,0 +1,22 @@
+create or replace procedure show1
+is 
+	user_name users.name%type;
+	book_count number;
+
+	cursor cur1 is 
+	select users.name,count(users.user_id)
+	from users,borrowedbooks
+	where users.user_id = borrowedbooks.user_id
+	group by users.name;
+begin
+	open cur1;
+
+	loop
+	fetch cur1 into user_name,book_count;
+        exit when cur1%notfound;
+	dbms_output.put_line('user name: ' || user_name || ' count: ' || book_count);
+	end loop;
+
+        close cur1;
+end;
+/

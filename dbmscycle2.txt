@@ -1,0 +1,74 @@
+1)
+sql
+DECLARE
+    message VARCHAR2(100);
+BEGIN
+    message:= 'Hello World';
+    DBMS_OUTPUT.PUT_LINE(message);
+END;
+/
+
+2)
+sql 
+DECLARE
+     score NUMBER := 85;
+     grade VARCHAR2(2);
+BEGIN 
+  IF score > 90 THEN grade := 'A';
+  ELSIF score >= 80 THEN grade := 'B';
+  ELSIF score >= 70 THEN grade := 'C';
+  ELSIF score >= 60 THEN grade := 'D' ;
+  ELSE grade := 'F';
+END IF;
+DBMS_OUTPUT.PUT_LINE('Grade :' || grade);
+END;
+/
+
+3)
+sql 
+DECLARE
+   TYPE SubjectMarks IS VARRAY(2) OF NUMBER;
+   TYPE StudentRecord IS TABLE OF SubjectMarks INDEX BY PLS_INTEGER;
+   StudentMarks StudentRecord;
+   total_marks NUMBER := 0;
+BEGIN
+   StudentMarks(1) := SubjectMarks(85,90);
+   StudentMarks(2) := SubjectMarks(78,88);
+   StudentMarks(3) := SubjectMarks(80,89);
+   StudentMarks(4) := SubjectMarks(60,77);
+   StudentMarks(5) := SubjectMarks(85,93);
+FOR i in 1..5 LOOP
+   total_marks := StudentMarks(i)(1) + StudentMarks(i)(2);
+   DBMS_OUTPUT.PUT_LINE('Student' || i || 'TOTAL Marks :' || total_marks);
+END LOOP;
+END;
+/
+
+4.
+sql 
+DECLARE
+  NUM NUMBER := 5;
+  factorial NUMBER := 1;
+BEGIN
+WHILE num > 0 LOOP
+   factorial := factorial*num;
+   num := num - 1;
+END LOOP;
+DBMS_OUTPUT.PUT_LINE('Factorial =' || factorial);
+END;
+/
+
+5.
+sql 
+DECLARE
+    multiplier NUMBER := 3;
+    result NUMBER;
+BEGIN
+FOR i in 1..10 LOOP
+    result := i * multiplier;
+    DBMS_OUTPUT.PUT_LINE(i || '*' || multiplier || '=' || result);
+END LOOP;
+END;
+/
+
+6.

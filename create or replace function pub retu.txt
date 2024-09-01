@@ -1,0 +1,22 @@
+create or replace function pub return boolean
+is
+
+begin
+	update books
+	set books.publication_year=2020
+	where books.book_id=4;
+	return true;
+end;
+/
+
+declare 
+result boolean;
+begin
+	result:=pub;
+       if result then
+		dbms_output.put_line('done');
+	else
+		dbms_output.put_line('failed');
+	end if;
+end;
+/

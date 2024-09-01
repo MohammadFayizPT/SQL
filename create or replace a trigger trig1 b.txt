@@ -1,0 +1,8 @@
+create or replace a trigger trig1 before insert or delete or update 
+on borrowedbooks for each row enable
+begin
+	if inserting then
+	 dbms_output.put_line('data manipulated successfully');
+	end if;
+end;
+/

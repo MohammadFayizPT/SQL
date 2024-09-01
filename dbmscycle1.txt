@@ -1,0 +1,3084 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Thu Aug 3 12:22:54 2023
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: r5b35@cseorc
+Enter password:
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> CLASSROOM
+SP2-0042: unknown command "CLASSROOM" - rest of line ignored.
+SQL> DISPLAY CLASSROOM
+SP2-0734: unknown command beginning "DISPLAY CL..." - rest of line ignored.
+SQL> CREATE TABLE classroom ( building varchar(10),room_number int primary key,capacity int)
+  2  ;
+
+Table created.
+
+SQL> DESCRIBE classroom
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BUILDING                                           VARCHAR2(10)
+ ROOM_NUMBER                               NOT NULL NUMBER(38)
+ CAPACITY                                           NUMBER(38)
+
+SQL> INSERT INTO classroom(Packard,101,500);
+INSERT INTO classroom(Packard,101,500)
+                              *
+ERROR at line 1:
+ORA-01747: invalid user.table.column, table.column, or column specification
+
+
+SQL> INSERT INTO classroom('Packard',101,500);
+INSERT INTO classroom('Packard',101,500)
+                      *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> INSERT INTO classroom("Packard",101,500);
+INSERT INTO classroom("Packard",101,500)
+                                *
+ERROR at line 1:
+ORA-01747: invalid user.table.column, table.column, or column specification
+
+
+SQL> INSERT INTO TABLE classroom('Packard',101,500);
+INSERT INTO TABLE classroom('Packard',101,500)
+            *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> INSERT INTO classroom VALUES('Packard',101,500);
+
+1 row created.
+
+SQL> INSERT INTO classroom VALUES('&building',&room_number,&capacity);
+Enter value for building: Painter
+Enter value for room_number: 514
+Enter value for capacity: 10
+old   1: INSERT INTO classroom VALUES('&building',&room_number,&capacity)
+new   1: INSERT INTO classroom VALUES('Painter',514,10)
+
+1 row created.
+
+SQL> Taylor
+SP2-0042: unknown command "Taylor" - rest of line ignored.
+SQL> SELECT * FROM classroom
+  2  ;
+
+BUILDING   ROOM_NUMBER   CAPACITY
+---------- ----------- ----------
+Packard            101        500
+Painter            514         10
+
+SQL> INSERT INTO classroom VALUES('&building',&room_number,&capacity);
+Enter value for building: Taylor
+Enter value for room_number: 3128
+Enter value for capacity: 70
+old   1: INSERT INTO classroom VALUES('&building',&room_number,&capacity)
+new   1: INSERT INTO classroom VALUES('Taylor',3128 ,70)
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> INSERT INTO classroom VALUES('&building',&room_number,&capacity);
+Enter value for building: Watson
+Enter value for room_number: 100
+Enter value for capacity: 30
+old   1: INSERT INTO classroom VALUES('&building',&room_number,&capacity)
+new   1: INSERT INTO classroom VALUES('Watson',100,30)
+
+1 row created.
+
+SQL> INSERT INTO classroom VALUES('&building',&room_number,&capacity);
+Enter value for building: Watson
+Enter value for room_number: 120
+Enter value for capacity: 50
+old   1: INSERT INTO classroom VALUES('&building',&room_number,&capacity)
+new   1: INSERT INTO classroom VALUES('Watson ',120,50)
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM classroom;
+
+BUILDING   ROOM_NUMBER   CAPACITY
+---------- ----------- ----------
+Packard            101        500
+Painter            514         10
+Taylor            3128         70
+Watson             100         30
+Watson             120         50
+
+SQL> CREATE TABLE department(dept_name varchar(10) primary key,building varchar(10),budget int);
+
+Table created.
+
+SQL> INSERT INTO department VALUES('&dept_name','&building',&budget);
+Enter value for dept_name: Biology
+Enter value for building: Watson
+Enter value for budget: 90000
+old   1: INSERT INTO department VALUES('&dept_name','&building',&budget)
+new   1: INSERT INTO department VALUES('Biology','Watson',90000)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO department VALUES('&dept_name','&building',&budget);
+Enter value for dept_name: Comp.Sci.
+Enter value for building: taylor
+Enter value for budget: 100000
+old   1: INSERT INTO department VALUES('&dept_name','&building',&budget)
+new   1: INSERT INTO department VALUES('Comp.Sci.','taylor',100000)
+
+1 row created.
+
+SQL> INSERT INTO department VALUES('&dept_name','&building',&budget);
+Enter value for dept_name: Elec.Eng.
+Enter value for building: Taylor
+Enter value for budget: 85000
+old   1: INSERT INTO department VALUES('&dept_name','&building',&budget)
+new   1: INSERT INTO department VALUES('Elec.Eng.','Taylor',85000)
+
+1 row created.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> INSERT INTO department VALUES('&dept_name','&building',&budget);
+Enter value for dept_name: Finance
+Enter value for building: Painter
+Enter value for budget: 120000
+old   1: INSERT INTO department VALUES('&dept_name','&building',&budget)
+new   1: INSERT INTO department VALUES('Finance','Painter',120000)
+
+1 row created.
+
+SQL> INSERT INTO department VALUES('&dept_name','&building',&budget);
+Enter value for dept_name: History
+Enter value for building: Painter
+Enter value for budget: 50000
+old   1: INSERT INTO department VALUES('&dept_name','&building',&budget)
+new   1: INSERT INTO department VALUES('History','Painter',50000)
+
+1 row created.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> INSERT INTO department VALUES('&dept_name','&building',&budget);
+Enter value for dept_name: Music
+Enter value for building: Packard
+Enter value for budget: 80000
+old   1: INSERT INTO department VALUES('&dept_name','&building',&budget)
+new   1: INSERT INTO department VALUES('Music','Packard',80000)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO department VALUES('&dept_name','&building',&budget);
+Enter value for dept_name: Physics
+Enter value for building: Watson
+Enter value for budget: 70000
+old   1: INSERT INTO department VALUES('&dept_name','&building',&budget)
+new   1: INSERT INTO department VALUES('Physics','Watson',70000)
+
+1 row created.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> SELECT *
+  2  FROM department
+  3  ;
+
+DEPT_NAME  BUILDING       BUDGET
+---------- ---------- ----------
+Biology    Watson          90000
+Comp.Sci.  taylor         100000
+Elec.Eng.  Taylor          85000
+Finance    Painter        120000
+History    Painter         50000
+Music      Packard         80000
+Physics    Watson          70000
+
+7 rows selected.
+
+SQL> CREATE TABLE course(course_id varchar(10) primary key,title varchar(30),dept_name varchar(10),credits int,foreign key(dept_name) references department(dept_name));
+
+Table created.
+
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: BIO-101
+Enter value for title: Intro.to Biology
+Enter value for dept_name: Biology
+Enter value for credits: 4
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('BIO-101','Intro.to Biology','Biology',4)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: BIO-301
+Enter value for title: Genetics
+Enter value for dept_name: Biology
+Enter value for credits: 4
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('BIO-301','Genetics','Biology',4)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: BIO-399
+Enter value for title: Computational Biology
+Enter value for dept_name: Biology
+Enter value for credits: 3
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('BIO-399','Computational Biology','Biology',3)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: CS-101
+Enter value for title: Intro.to Computer Science
+Enter value for dept_name: Comp.Sci.
+Enter value for credits: 4
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('CS-101','Intro.to Computer Science','Comp.Sci.',4)
+
+1 row created.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: CS-190
+Enter value for title: Game Design
+Enter value for dept_name: Comp.Sci
+Enter value for credits: 4
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('CS-190','Game Design','Comp.Sci',4)
+INSERT INTO course VALUES('CS-190','Game Design','Comp.Sci',4)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (R5B35.SYS_C0027841) violated - parent key not
+found
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: CS-315
+Enter value for title: Robotics
+Enter value for dept_name: Comp.Sci
+Enter value for credits: 3
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('CS-315','Robotics','Comp.Sci',3)
+INSERT INTO course VALUES('CS-315','Robotics','Comp.Sci',3)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (R5B35.SYS_C0027841) violated - parent key not
+found
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> SELECT * FROM course
+  2  ;
+
+COURSE_ID  TITLE                          DEPT_NAME     CREDITS
+---------- ------------------------------ ---------- ----------
+BIO-101    Intro.to Biology               Biology             4
+BIO-301    Genetics                       Biology             4
+BIO-399    Computational Biology          Biology             3
+CS-101     Intro.to Computer Science      Comp.Sci.           4
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: CS-190
+Enter value for title: Game Design
+Enter value for dept_name: Comp.Sci
+Enter value for credits: 4
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('CS-190','Game Design','Comp.Sci',4)
+INSERT INTO course VALUES('CS-190','Game Design','Comp.Sci',4)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (R5B35.SYS_C0027841) violated - parent key not
+found
+
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: CS-190
+Enter value for title: Game Design
+Enter value for dept_name: Comp.Sci.
+Enter value for credits: 4
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('CS-190','Game Design','Comp.Sci.',4)
+
+1 row created.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> SELECT * FROM course
+  2  ;
+
+COURSE_ID  TITLE                          DEPT_NAME     CREDITS
+---------- ------------------------------ ---------- ----------
+BIO-101    Intro.to Biology               Biology             4
+BIO-301    Genetics                       Biology             4
+BIO-399    Computational Biology          Biology             3
+CS-101     Intro.to Computer Science      Comp.Sci.           4
+CS-190     Game Design                    Comp.Sci.           4
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: CS-315
+Enter value for title: Robotics
+Enter value for dept_name: Comp.Sci.
+Enter value for credits: 3
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('CS-315','Robotics','Comp.Sci.',3)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: CS-319
+Enter value for title: Image Processing
+Enter value for dept_name: Comp.Sci.
+Enter value for credits: 3
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('CS-319','Image Processing','Comp.Sci.',3)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: CS-347
+Enter value for title: Database System Concepts
+Enter value for dept_name: Comp.Sci.
+Enter value for credits: 3
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('CS-347','Database System Concepts','Comp.Sci.',3)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: EE-181
+Enter value for title: Intro.to Digital Systems
+Enter value for dept_name: Elec.Eng.
+Enter value for credits: 3
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('EE-181','Intro.to Digital Systems','Elec.Eng.',3)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: FIN-201
+Enter value for title: Investment Banking
+Enter value for dept_name: Finance
+Enter value for credits: 3
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('FIN-201','Investment Banking','Finance',3)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: HIS-351
+Enter value for title: World History
+Enter value for dept_name: History
+Enter value for credits: 3
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('HIS-351','World History','History',3)
+
+1 row created.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: MU-199
+Enter value for title: Music Video Production
+Enter value for dept_name: Music
+Enter value for credits: 3
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('MU-199','Music Video Production','Music',3)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits);
+Enter value for course_id: PHY-101
+Enter value for title: Physical Priciples
+Enter value for dept_name: Physics
+Enter value for credits: 4
+old   1: INSERT INTO course VALUES('&course_id','&title','&dept_name',&credits)
+new   1: INSERT INTO course VALUES('PHY-101','Physical Priciples','Physics',4)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> SELECT * FROM course
+  2  ;
+
+COURSE_ID  TITLE                          DEPT_NAME     CREDITS
+---------- ------------------------------ ---------- ----------
+BIO-101    Intro.to Biology               Biology             4
+BIO-301    Genetics                       Biology             4
+BIO-399    Computational Biology          Biology             3
+CS-101     Intro.to Computer Science      Comp.Sci.           4
+CS-190     Game Design                    Comp.Sci.           4
+CS-315     Robotics                       Comp.Sci.           3
+CS-319     Image Processing               Comp.Sci.           3
+CS-347     Database System Concepts       Comp.Sci.           3
+EE-181     Intro.to Digital Systems       Elec.Eng.           3
+FIN-201    Investment Banking             Finance             3
+HIS-351    World History                  History             3
+
+COURSE_ID  TITLE                          DEPT_NAME     CREDITS
+---------- ------------------------------ ---------- ----------
+MU-199     Music Video Production         Music               3
+PHY-101    Physical Priciples             Physics             4
+
+13 rows selected.
+SQL> CREATE TABLE instructor VALUES(ID int primary key,name varchar(10),dept_name varchar(10),salary int,foreign key(dept_name) references department(dept_name));
+CREATE TABLE instructor VALUES(ID int primary key,name varchar(10),dept_name varchar(10),salary int,foreign key(dept_name) references department(dept_name))
+                        *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SQL> CREATE TABLE instructor(ID int primary key,name varchar(10),dept_name varchar(10),salary int,foreign key(dept_name) references department(dept_name));
+
+Table created.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 10101
+Enter value for name: Srinivasan
+Enter value for dept_name: Comp.Sci.
+Enter value for salary: 65000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(10101,'Srinivasan','Comp.Sci.',65000)
+
+1 row created.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 12121
+Enter value for name: Wu
+Enter value for dept_name: Finance
+Enter value for salary: 90000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(12121,'Wu','Finance',90000)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 15151
+Enter value for name: Mozart
+Enter value for dept_name: Music
+Enter value for salary: 40000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(15151,'Mozart','Music',40000)
+
+1 row created.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 22222
+Enter value for name: Einstein
+Enter value for dept_name: Physics
+Enter value for salary: 95000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(22222,'Einstein','Physics',95000)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 32343
+Enter value for name: El Said
+Enter value for dept_name: History
+Enter value for salary: 60000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(32343,'El Said','History',60000)
+
+1 row created.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 33456
+Enter value for name: Gold
+Enter value for dept_name: Physics
+Enter value for salary: 87000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(33456,'Gold','Physics',87000)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 45565
+Enter value for name: Katz
+Enter value for dept_name: Comp.Sci.
+Enter value for salary: 75000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(45565,'Katz','Comp.Sci.',75000)
+
+1 row created.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 58583
+Enter value for name: Califieri
+Enter value for dept_name: History
+Enter value for salary: 62000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(58583,'Califieri','History',62000)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: Singh
+Enter value for name: Finance
+Enter value for dept_name: 80000
+Enter value for salary: 80000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(Singh,'Finance','80000',80000)
+INSERT INTO instructor VALUES(Singh,'Finance','80000',80000)
+                              *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> SELECT * FROM instructor
+  2  ;
+
+        ID NAME       DEPT_NAME      SALARY
+---------- ---------- ---------- ----------
+     10101 Srinivasan Comp.Sci.       65000
+     12121 Wu         Finance         90000
+     15151 Mozart     Music           40000
+     22222 Einstein   Physics         95000
+     32343 El Said    History         60000
+     33456 Gold       Physics         87000
+     45565 Katz       Comp.Sci.       75000
+     58583 Califieri  History         62000
+
+8 rows selected.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 76543
+Enter value for name: Singh
+Enter value for dept_name: Finance
+Enter value for salary: 80000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(76543,'Singh','Finance',80000)
+
+1 row created.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 76766
+Enter value for name: Crick
+Enter value for dept_name: Biology
+Enter value for salary: 72000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(76766,'Crick','Biology',72000)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 83821
+Enter value for name: Brandt
+Enter value for dept_name: Comp.Sci.
+Enter value for salary: 92000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(83821,'Brandt','Comp.Sci.',92000)
+
+1 row created.
+
+SQL> INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary);
+Enter value for id: 98345
+Enter value for name: Kim
+Enter value for dept_name: Elec.Eng.
+Enter value for salary: 80000
+old   1: INSERT INTO instructor VALUES(&ID,'&name','&dept_name',&salary)
+new   1: INSERT INTO instructor VALUES(98345,'Kim','Elec.Eng.',80000)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> SELECT * FROM instructor
+  2  ;
+
+        ID NAME       DEPT_NAME      SALARY
+---------- ---------- ---------- ----------
+     10101 Srinivasan Comp.Sci.       65000
+     12121 Wu         Finance         90000
+     15151 Mozart     Music           40000
+     22222 Einstein   Physics         95000
+     32343 El Said    History         60000
+     33456 Gold       Physics         87000
+     45565 Katz       Comp.Sci.       75000
+     58583 Califieri  History         62000
+     76543 Singh      Finance         80000
+     76766 Crick      Biology         72000
+     83821 Brandt     Comp.Sci.       92000
+
+        ID NAME       DEPT_NAME      SALARY
+---------- ---------- ---------- ----------
+     98345 Kim        Elec.Eng.       80000
+
+12 rows selected.
+
+SQL> CREATE TABLE student(ID int primary key,name varchar(10),dept_name varchar(10),tot_cred int, foreign key(dept_name) references department(dept_name));
+
+Table created.
+
+SQL> INSERT INTO VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 00128
+Enter value for name: Zhang
+Enter value for dept_name: Comp.Sci.
+Enter value for tot_cred: 102
+old   1: INSERT INTO VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO VALUES(00128,'Zhang','Comp.Sci.',102)
+INSERT INTO VALUES(00128,'Zhang','Comp.Sci.',102)
+            *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 00128
+Enter value for name: Zhang
+Enter value for dept_name: Comp.Sci.
+Enter value for tot_cred: 102
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(00128,'Zhang','Comp.Sci.',102)
+
+1 row created.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 12345
+Enter value for name: Shankar
+Enter value for dept_name: Comp.Sci.
+Enter value for tot_cred: 32
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(12345,'Shankar','Comp.Sci.',32)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 19991
+Enter value for name: Brandt
+Enter value for dept_name: History
+Enter value for tot_cred: 80
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(19991,'Brandt','History',80)
+
+1 row created.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 23121
+Enter value for name: Chavez
+Enter value for dept_name: Finance
+Enter value for tot_cred: 110
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(23121,'Chavez','Finance',110)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 44553
+Enter value for name: Peltier
+Enter value for dept_name: Physics
+Enter value for tot_cred: 56
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(44553,'Peltier','Physics',56)
+
+1 row created.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 45678
+Enter value for name: Levy
+Enter value for dept_name: Physics
+Enter value for tot_cred: 46
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(45678,'Levy','Physics',46)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 54321
+Enter value for name: Williams
+Enter value for dept_name: Comp.Sci.
+Enter value for tot_cred: 54
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(54321,'Williams','Comp.Sci.',54)
+
+1 row created.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 55739
+Enter value for name: Sanchez
+Enter value for dept_name: Music
+Enter value for tot_cred: 38
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(55739,'Sanchez','Music',38)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 70557
+Enter value for name: Snow
+Enter value for dept_name: Physics
+Enter value for tot_cred: 0
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(70557,'Snow','Physics',0)
+
+1 row created.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 76543
+Enter value for name: Brown
+Enter value for dept_name: Comp.Sci.
+Enter value for tot_cred: 58
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(76543,'Brown','Comp.Sci.',58)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 76653
+Enter value for name: Aoi
+Enter value for dept_name: Elec.Eng
+Enter value for tot_cred: 60
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(76653,'Aoi','Elec.Eng',60)
+INSERT INTO student VALUES(76653,'Aoi','Elec.Eng',60)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (R5B35.SYS_C0028102) violated - parent key not
+found
+
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 76653
+Enter value for name: Aoi
+Enter value for dept_name: Elec.Eng.
+Enter value for tot_cred: 60
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(76653,'Aoi','Elec.Eng.',60)
+
+1 row created.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 98765
+Enter value for name: Bourikas
+Enter value for dept_name: Elec.Eng.
+Enter value for tot_cred: 98
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(98765,'Bourikas','Elec.Eng.',98)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred);
+Enter value for id: 98988
+Enter value for name: Tanaka
+Enter value for dept_name: Biology
+Enter value for tot_cred: 120
+old   1: INSERT INTO student VALUES(&ID,'&name','&dept_name',&tot_cred)
+new   1: INSERT INTO student VALUES(98988,'Tanaka','Biology',120)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> SELECT * FROM student
+  2  ;
+
+        ID NAME       DEPT_NAME    TOT_CRED
+---------- ---------- ---------- ----------
+       128 Zhang      Comp.Sci.         102
+     12345 Shankar    Comp.Sci.          32
+     19991 Brandt     History            80
+     23121 Chavez     Finance           110
+     44553 Peltier    Physics            56
+     45678 Levy       Physics            46
+     54321 Williams   Comp.Sci.          54
+     55739 Sanchez    Music              38
+     70557 Snow       Physics             0
+     76543 Brown      Comp.Sci.          58
+     76653 Aoi        Elec.Eng.          60
+
+        ID NAME       DEPT_NAME    TOT_CRED
+---------- ---------- ---------- ----------
+     98765 Bourikas   Elec.Eng.          98
+     98988 Tanaka     Biology           120
+
+13 rows selected.
+SQL> CREATE TABLE section (course_id varchar(10),sec_id int,semester varchar(10),year int,building varchar(10),room_number int,foreign key(course_id) references course(course_id),foreign key(room_number) references classroom(room_number));
+
+Table created.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: BIO-101
+Enter value for sec_id: 1
+Enter value for semester: Summer
+Enter value for year: 2009
+Enter value for building: Painter
+Enter value for room_number: 514
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('BIO-101',1,'Summer',2009,'Painter',514)
+
+1 row created.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: BIO-301
+Enter value for sec_id: 1
+Enter value for semester: Summer
+Enter value for year: 2010
+Enter value for building: Painter
+Enter value for room_number: 514
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('BIO-301',1,'Summer',2010,'Painter',514)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for building: Packard
+Enter value for room_number: 101
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('CS-101',1,'Fall',2009,'Packard',101)
+
+1 row created.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for building: Packard
+Enter value for room_number: 101
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('CS-101',1,'Spring',2010,'Packard',101)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: CS-190
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2009
+Enter value for building: Taylor
+Enter value for room_number: 3128
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('CS-190',1,'Spring',2009,'Taylor',3128)
+
+1 row created.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: CS-190
+Enter value for sec_id: 2
+Enter value for semester: Spring
+Enter value for year: 2009
+Enter value for building: Taylor
+Enter value for room_number: 3128
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('CS-190',2,'Spring',2009,'Taylor',3128)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: CS-315
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for building: Watson
+Enter value for room_number: 120
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('CS-315',1,'Spring',2010,'Watson',120)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: CS-319
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for building: Watson
+Enter value for room_number: 100
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('CS-319',1,'Spring',2010,'Watson',100)
+
+1 row created.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: CS-319
+Enter value for sec_id: 2
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for building: Taylor
+Enter value for room_number: 3128
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('CS-319',2,'Spring',2010,'Taylor',3128)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: CS-347
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for building: Taylor
+Enter value for room_number: 3128
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('CS-347',1,'Fall',2009,'Taylor',3128)
+
+1 row created.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: EE-181
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2009
+Enter value for building: Taylor
+Enter value for room_number: 3128
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('EE-181',1,'Spring',2009,'Taylor',3128)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: FIN-201
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for building: Packard
+Enter value for room_number: 101
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('FIN-201',1,'Spring',2010,'Packard',101)
+
+1 row created.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: HIS-351
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for building: Painter
+Enter value for room_number: 514
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('HIS-351',1,'Spring',2010,'Painter',514)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: MU-199
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for building: Packard
+Enter value for room_number: 101
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('MU-199',1,'Spring',2010,'Packard',101)
+
+1 row created.
+
+SQL> INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number);
+Enter value for course_id: PHY-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for building: Watson
+Enter value for room_number: 100
+old   1: INSERT INTO section VALUES('&course_id',&sec_id,'&semester',&year,'&building',&room_number)
+new   1: INSERT INTO section VALUES('PHY-101',1,'Fall',2009,'Watson',100)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> SELECT * FROM section
+  2  ;
+
+COURSE_ID      SEC_ID SEMESTER         YEAR BUILDING   ROOM_NUMBER
+---------- ---------- ---------- ---------- ---------- -----------
+BIO-101             1 Summer           2009 Painter            514
+BIO-301             1 Summer           2010 Painter            514
+CS-101              1 Fall             2009 Packard            101
+CS-101              1 Spring           2010 Packard            101
+CS-190              1 Spring           2009 Taylor            3128
+CS-190              2 Spring           2009 Taylor            3128
+CS-315              1 Spring           2010 Watson             120
+CS-319              1 Spring           2010 Watson             100
+CS-319              2 Spring           2010 Taylor            3128
+CS-347              1 Fall             2009 Taylor            3128
+EE-181              1 Spring           2009 Taylor            3128
+
+COURSE_ID      SEC_ID SEMESTER         YEAR BUILDING   ROOM_NUMBER
+---------- ---------- ---------- ---------- ---------- -----------
+FIN-201             1 Spring           2010 Packard            101
+HIS-351             1 Spring           2010 Painter            514
+MU-199              1 Spring           2010 Packard            101
+PHY-101             1 Fall             2009 Watson             100
+
+15 rows selected.
+SQL> CREATE TABLE teaches(ID int,course_id varchar(10),sec_id int,semester varchar(10),year int,foreign key(ID) references instructor(ID),foreign key(course_id) references course(course_id));
+
+Table created.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 10101
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(10101,'CS-101',1,'Fall',2009)
+
+1 row created.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 10101
+Enter value for course_id: CS-315
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(10101,'CS-315',1,'Spring',2010)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 10101
+Enter value for course_id: CS-347
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(10101,'CS-347',1,'Fall',2009)
+
+1 row created.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 12121
+Enter value for course_id: FIN-201
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(12121,'FIN-201',1,'Spring',2010)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 15151
+Enter value for course_id: MU-199
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(15151,'MU-199',1,'Spring',2010)
+
+1 row created.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 22222
+Enter value for course_id: PHY-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(22222,'PHY-101',1,'Fall',2009)
+
+1 row created.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 32343
+Enter value for course_id: HIS-351
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(32343,'HIS-351',1,'Spring',2010)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 45565
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(45565,'CS-101',1,'Spring',2010)
+
+1 row created.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 45565
+Enter value for course_id: CS-319
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(45565,'CS-319',1,'Spring',2010)
+
+1 row created.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 76766
+Enter value for course_id: BIO-101
+Enter value for sec_id: 1
+Enter value for semester: Summer
+Enter value for year: 2009
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(76766,'BIO-101',1,'Summer',2009)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 76766
+Enter value for course_id: BIO-301
+Enter value for sec_id: 1
+Enter value for semester: Summer
+Enter value for year: 2010
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(76766,'BIO-301',1,'Summer',2010)
+
+1 row created.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 83821
+Enter value for course_id: CS-190
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2009
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(83821,'CS-190',1,'Spring',2009)
+
+1 row created.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 83821
+Enter value for course_id: CS-190
+Enter value for sec_id: 2
+Enter value for semester: Spring
+Enter value for year: 2009
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(83821,'CS-190',2,'Spring',2009)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 83821
+Enter value for course_id: CS-319
+Enter value for sec_id: 2
+Enter value for semester: Spring
+Enter value for year: 2010
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(83821,'CS-319',2,'Spring',2010)
+
+1 row created.
+
+SQL> INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year);
+Enter value for id: 98345
+Enter value for course_id: EE-181
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2009
+old   1: INSERT INTO teaches VALUES(&ID,'&course_id',&sec_id,'&semester',&year)
+new   1: INSERT INTO teaches VALUES(98345,'EE-181',1,'Spring',2009)
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> SELECT * FROM teaches
+  2  ;
+
+        ID COURSE_ID      SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ---------- ----------
+     10101 CS-101              1 Fall             2009
+     10101 CS-315              1 Spring           2010
+     10101 CS-347              1 Fall             2009
+     12121 FIN-201             1 Spring           2010
+     15151 MU-199              1 Spring           2010
+     22222 PHY-101             1 Fall             2009
+     32343 HIS-351             1 Spring           2010
+     45565 CS-101              1 Spring           2010
+     45565 CS-319              1 Spring           2010
+     76766 BIO-101             1 Summer           2009
+     76766 BIO-301             1 Summer           2010
+
+        ID COURSE_ID      SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ---------- ----------
+     83821 CS-190              1 Spring           2009
+     83821 CS-190              2 Spring           2009
+     83821 CS-319              2 Spring           2010
+     98345 EE-181              1 Spring           2009
+
+15 rows selected.
+
+SQL> CREATE TABLE takes(ID int,course_id varchar(10),sec_id int, semester varchar(10),year int,grade varchar(5),foreign key(ID) references student(ID),foreign key(course_id) references course(course_id));
+
+Table created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 00128
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for grade: A
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(00128,'CS-101',1,'Fall',2009,'A')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 00128
+Enter value for course_id: CS-347
+Enter value for sec_id: 1
+Enter value for semester: FAll
+Enter value for year: 2009
+Enter value for grade: A-
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(00128,'CS-347',1,'FAll',2009,'A-')
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 12345
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for grade: C
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(12345,'CS-101',1,'Fall',2009,'C')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 12345
+Enter value for course_id: CS-190
+Enter value for sec_id: 2
+Enter value for semester: Spring
+Enter value for year: 2009
+Enter value for grade: A
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(12345,'CS-190',2,'Spring',2009,'A')
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 12345
+Enter value for course_id: CS-315
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for grade: A
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(12345,'CS-315',1,'Spring',2010,'A')
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 12345
+Enter value for course_id: CS-347
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for grade: A
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(12345,'CS-347',1,'Fall',2009,'A')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 19991
+Enter value for course_id: HIS-351
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for grade: B
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(19991,'HIS-351',1,'Spring',2010,'B')
+
+1 row created.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 23121
+Enter value for course_id: FIN-201
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for grade: C+
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(23121,'FIN-201',1,'Spring',2010,'C+')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 44553
+Enter value for course_id: PHY-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for grade: B-
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(44553,'PHY-101',1,'Fall',2009,'B-')
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 45678
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for grade: F
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(45678,'CS-101',1,'Fall',2009,'F')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 45678
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for grade: B+
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(45678,'CS-101',1,'Spring',2010,'B+')
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 45678
+Enter value for course_id: CS-319
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for grade: B
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(45678,'CS-319',1,'Spring',2010,'B')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 54321
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for grade: A-
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(54321,'CS-101',1,'Fall',2009,'A-')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 54321
+Enter value for course_id: CS-190
+Enter value for sec_id: 2
+Enter value for semester: Spring
+Enter value for year: 2009
+Enter value for grade: B+
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(54321,'CS-190',2,'Spring',2009,'B+')
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 55739
+Enter value for course_id: MU-199
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for grade: A-
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(55739,'MU-199',1,'Spring',2010,'A-')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 76543
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for grade: A
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(76543,'CS-101',1,'Fall',2009,'A')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 76543
+Enter value for course_id: CS-319
+Enter value for sec_id: 2
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for grade: A
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(76543,'CS-319',2,'Spring',2010,'A')
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 76653
+Enter value for course_id: EE-181
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2009
+Enter value for grade: C
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(76653,'EE-181',1,'Spring',2009,'C')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 98765
+Enter value for course_id: CS-101
+Enter value for sec_id: 1
+Enter value for semester: Fall
+Enter value for year: 2009
+Enter value for grade: C-
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(98765,'CS-101',1,'Fall',2009,'C-')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 98765
+Enter value for course_id: CS-315
+Enter value for sec_id: 1
+Enter value for semester: Spring
+Enter value for year: 2010
+Enter value for grade: B
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(98765,'CS-315',1,'Spring',2010,'B')
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: BIO-101
+Enter value for course_id: 1
+Enter value for sec_id:
+Enter value for semester:
+Enter value for year:
+Enter value for grade:
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(BIO-101,'1',,'',,'')
+INSERT INTO takes VALUES(BIO-101,'1',,'',,'')
+                                     *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 98988
+Enter value for course_id: BIO-101
+Enter value for sec_id: 1
+Enter value for semester: Summer
+Enter value for year: 2009
+Enter value for grade: A
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(98988,'BIO-101',1,'Summer',2009,'A')
+
+1 row created.
+
+SQL> INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade');
+Enter value for id: 98988
+Enter value for course_id: BIO-301
+Enter value for sec_id: 1
+Enter value for semester: Summer
+Enter value for year: 2010
+Enter value for grade: null
+old   1: INSERT INTO takes VALUES(&ID,'&course_id',&sec_id,'&semester',&year,'&grade')
+new   1: INSERT INTO takes VALUES(98988,'BIO-301',1,'Summer',2010,'null')
+
+1 row created.
+
+SQL> commoit;
+SP2-0042: unknown command "commoit" - rest of line ignored.
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from takes
+  2  ;
+
+        ID COURSE_ID      SEC_ID SEMESTER         YEAR GRADE
+---------- ---------- ---------- ---------- ---------- -----
+       128 CS-101              1 Fall             2009 A
+       128 CS-347              1 FAll             2009 A-
+     12345 CS-101              1 Fall             2009 C
+     12345 CS-190              2 Spring           2009 A
+     12345 CS-315              1 Spring           2010 A
+     12345 CS-347              1 Fall             2009 A
+     19991 HIS-351             1 Spring           2010 B
+     23121 FIN-201             1 Spring           2010 C+
+     44553 PHY-101             1 Fall             2009 B-
+     45678 CS-101              1 Fall             2009 F
+     45678 CS-101              1 Spring           2010 B+
+
+        ID COURSE_ID      SEC_ID SEMESTER         YEAR GRADE
+---------- ---------- ---------- ---------- ---------- -----
+     45678 CS-319              1 Spring           2010 B
+     54321 CS-101              1 Fall             2009 A-
+     54321 CS-190              2 Spring           2009 B+
+     55739 MU-199              1 Spring           2010 A-
+     76543 CS-101              1 Fall             2009 A
+     76543 CS-319              2 Spring           2010 A
+     76653 EE-181              1 Spring           2009 C
+     98765 CS-101              1 Fall             2009 C-
+     98765 CS-315              1 Spring           2010 B
+     98988 BIO-101             1 Summer           2009 A
+     98988 BIO-301             1 Summer           2010 null
+
+22 rows selected.
+
+//2ND QUESTIONS 
+a).SQL> ALTER TABLE course
+  2  MODIFY course_id varchar(20);
+
+Table altered.
+b)SQL> ALTER TABLE department
+  2  ADD dept_no number;
+
+Table altered.
+
+c)SQL> ALTER TABLE student
+  2  ADD dat_e date;
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('24-07-2000','dd-mm-yyyy') WHERE ID= 128;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('01-01-2001','dd-mm-yyyy') WHERE ID= 12345;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('10-06-2002','dd-mm-yyyy') WHERE ID= 19991;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('25-05-2023','dd-mm-yyyy') WHERE ID= 23121;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('30-04-2004','dd-mm-yyyy') WHERE ID= 44553;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('27-08-1999','dd-mm-yyyy') WHERE ID= 45678;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('01-10-2006','dd-mm-yyyy') WHERE ID= 54321;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('07-02-1995','dd-mm-yyyy') WHERE ID= 55739;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('08-04-2008','dd-mm-yyyy') WHERE ID= 70557;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('09-03-2009','dd-mm-yyyy') WHERE ID= 76543;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('10-05-2010','dd-mm-yyyy') WHERE ID= 76653;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('07-06-2011','dd-mm-yyyy') WHERE ID= 98765;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET dat_e=to_date('08-04-2012','dd-mm-yyyy') WHERE ID= 98988;
+
+1 row updated.
+
+SQL> SELECT * FROM student;
+
+        ID NAME       DEPT_NAME    TOT_CRED DAT_E
+---------- ---------- ---------- ---------- ---------
+       128 Zhang      Comp.Sci.         102 24-JUL-00
+     12345 Shankar    Comp.Sci.          32 01-JAN-01
+     19991 Brandt     History            80 10-JUN-02
+     23121 Chavez     Finance           110 25-MAY-23
+     44553 Peltier    Physics            56 30-APR-04
+     45678 Levy       Physics            46 27-AUG-99
+     54321 Williams   Comp.Sci.          54 01-OCT-06
+     55739 Sanchez    Music              38 07-FEB-95
+     70557 Snow       Physics             0 08-APR-08
+     76543 Brown      Comp.Sci.          58 09-MAR-09
+     76653 Aoi        Elec.Eng.          60 10-MAY-10
+
+        ID NAME       DEPT_NAME    TOT_CRED DAT_E
+---------- ---------- ---------- ---------- ---------
+     98765 Bourikas   Elec.Eng.          98 07-JUN-11
+     98988 Tanaka     Biology           120 08-APR-12
+
+13 rows selected.
+
+d)SQL> ALTER TABLE student
+  2  MODIFY name varchar(10) not null;
+
+Table altered.
+
+e)SQL> ALTER TABLE classroom
+  2  MODIFY capacity int default 50;
+
+Table altered.
+
+f)
+SQL> ALTER TABLE department
+  2  MODIFY dept_name varchar(10) UNIQUE;
+MODIFY dept_name varchar(10) UNIQUE
+                             *
+ERROR at line 2:
+ORA-02261: such unique or primary key already exists in the table
+
+g)SQL> ALTER TABLE instructor
+  2  ADD CONSTRAINT SALARY_CONSTRAINT CHECK(salary>=40000);
+
+Table altered.
+
+//3rd  QUESTIONS
+
+b)SQL> ALTER TABLE department
+  2  DROP COLUMN dept_no;
+
+Table altered.
+
+SQL> DESC  department;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_NAME                                 NOT NULL VARCHAR2(10)
+ BUILDING                                           VARCHAR2(10)
+ BUDGET
+
+d)SQL> ALTER TABLE student
+  2  MODIFY name varchar(20) NULL;
+
+Table altered.
+
+g)SQL> ALTER TABLE instructor
+  2  DROP CONSTRAINT SALARY_CONSTRAINT;
+
+Table altered.
+
+//4th QUESTIONS
+
+ SQL> ALTER TABLE takes
+  2  RENAME TO subject;
+
+Table altered.
+
+SQL> DESC subject;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(38)
+ COURSE_ID                                          VARCHAR2(10)
+ SEC_ID                                             NUMBER(38)
+ SEMESTER                                           VARCHAR2(10)
+ YEAR                                               NUMBER(38)
+ GRADE                                              VARCHAR2(5)
+
+
+3.DML Commands
+ 1.
+   a)SQL> UPDATE student
+  2  SET name='Mosart'
+  3  WHERE id=45678
+  4  ;
+
+1 row updated.
+
+SQL> SELECT * FROM student;
+
+        ID NAME       DEPT_NAME    TOT_CRED DAT_E
+---------- ---------- ---------- ---------- ---------
+       128 Zhang      Comp.Sci.         102 24-JUL-00
+     12345 Shankar    Comp.Sci.          32 01-JAN-01
+     19991 Brandt     History            80 10-JUN-02
+     23121 Chavez     Finance           110 25-MAY-23
+     44553 Peltier    Physics            56 30-APR-04
+     45678 Mosart     Physics            46 27-AUG-99
+     54321 Williams   Comp.Sci.          54 01-OCT-06
+     55739 Sanchez    Music              38 07-FEB-95
+     70557 Snow       Physics             0 08-APR-08
+     76543 Brown      Comp.Sci.          58 09-MAR-09
+     76653 Aoi        Elec.Eng.          60 10-MAY-10
+
+        ID NAME       DEPT_NAME    TOT_CRED DAT_E
+---------- ---------- ---------- ---------- ---------
+     98765 Bourikas   Elec.Eng.          98 07-JUN-11
+     98988 Tanaka     Biology           120 08-APR-12
+
+13 rows selected.
+
+b)
+SQL> UPDATE department
+  2  SET budget=100000 ,building='Taylor'
+  3  WHERE dept_name='History';
+
+1 row updated.
+
+SQL> SELECT * FROM department;
+
+DEPT_NAME  BUILDING       BUDGET
+---------- ---------- ----------
+Biology    Watson          90000
+Comp.Sci.  taylor         100000
+Elec.Eng.  Taylor          85000
+Finance    Painter        120000
+History    Taylor         100000
+Music      Packard         80000
+Physics    Watson          70000
+
+7 rows selected.
+
+c)
+SQL> UPDATE instructor
+  2  SET salary=salary*1.1;
+
+12 rows updated.
+
+SQL> SELECT * FROM instructor;
+
+        ID NAME       DEPT_NAME      SALARY
+---------- ---------- ---------- ----------
+     10101 Srinivasan Comp.Sci.       71500
+     12121 Wu         Finance         99000
+     15151 Mozart     Music           44000
+     22222 Einstein   Physics        104500
+     32343 El Said    History         66000
+     33456 Gold       Physics         95700
+     45565 Katz       Comp.Sci.       82500
+     58583 Califieri  History         68200
+     76543 Singh      Finance         88000
+     76766 Crick      Biology         79200
+     83821 Brandt     Comp.Sci.      101200
+
+        ID NAME       DEPT_NAME      SALARY
+---------- ---------- ---------- ----------
+     98345 Kim        Elec.Eng.       88000
+
+12 rows selected.
+d)
+SQL> UPDATE course
+  2  SET credits=4
+  3  WHERE dept_name='Comp.Sci.';
+
+5 rows updated.
+
+SQL> SELECT * FROM course;
+
+COURSE_ID            TITLE                          DEPT_NAME     CREDITS
+-------------------- ------------------------------ ---------- ----------
+BIO-101              Intro.to Biology               Biology             4
+BIO-301              Genetics                       Biology             4
+BIO-399              Computational Biology          Biology             3
+CS-101               Intro.to Computer Science      Comp.Sci.           4
+CS-190               Game Design                    Comp.Sci.           4
+CS-315               Robotics                       Comp.Sci.           4
+CS-319               Image Processing               Comp.Sci.           4
+CS-347               Database System Concepts       Comp.Sci.           4
+EE-181               Intro.to Digital Systems       Elec.Eng.           3
+FIN-201              Investment Banking             Finance             3
+HIS-351              World History                  History             3
+
+COURSE_ID            TITLE                          DEPT_NAME     CREDITS
+-------------------- ------------------------------ ---------- ----------
+MU-199               Music Video Production         Music               3
+PHY-101              Physical Priciples             Physics             4
+
+13 rows selected.
+
+e)
+SQL> UPDATE student
+  2  SET tot_cred=tot_cred+10
+  3  WHERE tot_cred>=20 AND tot_cred<=50;
+
+3 rows updated.
+
+SQL> SELECT * FROM student;
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+       128 Zhang                Comp.Sci.         102 24-JUL-00
+     12345 Shankar              Comp.Sci.          42 01-JAN-01
+     19991 Brandt               History            80 10-JUN-02
+     23121 Chavez               Finance           110 25-MAY-23
+     44553 Peltier              Physics            56 30-APR-04
+     45678 Mosart               Physics            56 27-AUG-99
+     54321 Williams             Comp.Sci.          54 01-OCT-06
+     55739 Sanchez              Music              48 07-FEB-95
+     70557 Snow                 Physics             0 08-APR-08
+     76543 Brown                Comp.Sci.          58 09-MAR-09
+     76653 Aoi                  Elec.Eng.          60 10-MAY-10
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+     98765 Bourikas             Elec.Eng.          98 07-JUN-11
+     98988 Tanaka               Biology           120 08-APR-12
+
+13 rows selected.
+
+f)
+SQL> UPDATE instructor
+  2  SET salary=1.05*salary
+  3  WHERE salary<(SELECT AVG(salary) FROM instructor);
+
+5 rows updated.
+SQL> SELECT * FROM instructor;
+
+        ID NAME       DEPT_NAME      SALARY
+---------- ---------- ---------- ----------
+     10101 Srinivasan Comp.Sci.       75075
+     12121 Wu         Finance         99000
+     15151 Mozart     Music           46200
+     22222 Einstein   Physics        104500
+     32343 El Said    History         69300
+     33456 Gold       Physics         95700
+     45565 Katz       Comp.Sci.       82500
+     58583 Califieri  History         71610
+     76543 Singh      Finance         88000
+     76766 Crick      Biology         83160
+     83821 Brandt     Comp.Sci.      101200
+
+        ID NAME       DEPT_NAME      SALARY
+---------- ---------- ---------- ----------
+     98345 Kim        Elec.Eng.       88000
+
+12 rows selected.
+g)
+SQL> UPDATE teaches
+  2  SET year=2010
+  3  WHERE course_id='CS-101' AND semester='Fall';
+
+1 row updated.
+
+SQL> SELECT * FROM teaches;
+
+        ID COURSE_ID      SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ---------- ----------
+     10101 CS-101              1 Fall             2010
+     10101 CS-315              1 Spring           2010
+     10101 CS-347              1 Fall             2009
+     12121 FIN-201             1 Spring           2010
+     15151 MU-199              1 Spring           2010
+     22222 PHY-101             1 Fall             2009
+     32343 HIS-351             1 Spring           2010
+     45565 CS-101              1 Spring           2010
+     45565 CS-319              1 Spring           2010
+     76766 BIO-101             1 Summer           2009
+     76766 BIO-301             1 Summer           2010
+
+        ID COURSE_ID      SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ---------- ----------
+     83821 CS-190              1 Spring           2009
+     83821 CS-190              2 Spring           2009
+     83821 CS-319              2 Spring           2010
+     98345 EE-181              1 Spring           2009
+
+15 rows selected.
+
+2.
+a)SQL> DELETE FROM  student
+  2  WHERE tot_cred=0;
+
+1 row deleted.
+
+SQL> SELECT * FROM student;
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+       128 Zhang                Comp.Sci.         102 24-JUL-00
+     12345 Shankar              Comp.Sci.          42 01-JAN-01
+     19991 Brandt               History            80 10-JUN-02
+     23121 Chavez               Finance           110 25-MAY-23
+     44553 Peltier              Physics            56 30-APR-04
+     45678 Mosart               Physics            56 27-AUG-99
+     54321 Williams             Comp.Sci.          54 01-OCT-06
+     55739 Sanchez              Music              48 07-FEB-95
+     76543 Brown                Comp.Sci.          58 09-MAR-09
+     76653 Aoi                  Elec.Eng.          60 10-MAY-10
+     98765 Bourikas             Elec.Eng.          98 07-JUN-11
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+     98988 Tanaka               Biology           120 08-APR-12
+
+12 rows selected.
+
+b)SQL> DELETE FROM instructor
+  2  WHERE ID = (SELECT ID FROM instructor WHERE ID LIKE '765%');
+
+1 row deleted.
+
+SQL> SELECT * FROM instructor;
+
+        ID NAME       DEPT_NAME      SALARY
+---------- ---------- ---------- ----------
+     10101 Srinivasan Comp.Sci.       75075
+     12121 Wu         Finance         99000
+     15151 Mozart     Music           46200
+     22222 Einstein   Physics        104500
+     32343 El Said    History         69300
+     33456 Gold       Physics         95700
+     45565 Katz       Comp.Sci.       82500
+     58583 Califieri  History         71610
+     76766 Crick      Biology         83160
+     83821 Brandt     Comp.Sci.      101200
+     98345 Kim        Elec.Eng.       88000
+
+11 rows selected.
+
+c)SQL> DELETE FROM course
+  2  WHERE course_id NOT IN(SELECT course_id FROM section);
+
+1 row deleted.
+
+SQL> SELECT * FROM course;
+
+COURSE_ID            TITLE                          DEPT_NAME     CREDITS
+-------------------- ------------------------------ ---------- ----------
+BIO-101              Intro.to Biology               Biology             4
+BIO-301              Genetics                       Biology             4
+CS-101               Intro.to Computer Science      Comp.Sci.           4
+CS-190               Game Design                    Comp.Sci.           4
+CS-315               Robotics                       Comp.Sci.           4
+CS-319               Image Processing               Comp.Sci.           4
+CS-347               Database System Concepts       Comp.Sci.           4
+EE-181               Intro.to Digital Systems       Elec.Eng.           3
+FIN-201              Investment Banking             Finance             3
+HIS-351              World History                  History             3
+MU-199               Music Video Production         Music               3
+
+COURSE_ID            TITLE                          DEPT_NAME     CREDITS
+-------------------- ------------------------------ ---------- ----------
+PHY-101              Physical Priciples             Physics             4
+
+12 rows selected.
+
+//4th QUESTIONS
+
+1.SQL> SELECT name,dept_name
+  2  FROM instructor;
+
+NAME       DEPT_NAME
+---------- ----------
+Srinivasan Comp.Sci.
+Wu         Finance
+Mozart     Music
+Einstein   Physics
+El Said    History
+Gold       Physics
+Katz       Comp.Sci.
+Califieri  History
+Crick      Biology
+Brandt     Comp.Sci.
+Kim        Elec.Eng.
+
+11 rows selected.
+
+2.SQL> SELECT DISTINCT semester
+  2  FROM teaches;
+
+SEMESTER
+----------
+Spring
+Summer
+Fall
+
+3.SQL> SELECT name,1.1*salary
+  2  FROM instructor;
+
+NAME       1.1*SALARY
+---------- ----------
+Srinivasan    82582.5
+Wu             108900
+Mozart          50820
+Einstein       114950
+El Said         76230
+Gold           105270
+Katz            90750
+Califieri       78771
+Crick           91476
+Brandt         111320
+Kim             96800
+
+11 rows selected.
+
+4.
+SQL> SELECT ID,name
+  2  FROM instructor
+  3  WHERE salary>70000 AND dept_name='Comp.Sci.';
+
+        ID NAME
+---------- ----------
+     10101 Srinivasan
+     45565 Katz
+     83821 Brandt
+5.
+SQL> SELECT name,instructor.dept_name,building
+  2  FROM instructor,department
+  3  WHERE instructor.dept_name=department.dept_name;
+
+NAME       DEPT_NAME  BUILDING
+---------- ---------- ----------
+Crick      Biology    Watson
+Brandt     Comp.Sci.  Taylor
+Katz       Comp.Sci.  Taylor
+Srinivasan Comp.Sci.  Taylor
+Kim        Elec.Eng.  Taylor
+Wu         Finance    Painter
+El Said    History    Taylor
+Califieri  History    Taylor
+Mozart     Music      Packard
+Einstein   Physics    Watson
+Gold       Physics    Watson
+
+11 rows selected.
+
+6.
+SQL> SELECT name,course_id
+  2  FROM instructor,course
+  3  WHERE instructor.dept_name='Comp.Sci.' AND instructor.dept_name=course.dept_name;
+
+NAME       COURSE_ID
+---------- --------------------
+Brandt     CS-101
+Katz       CS-101
+Srinivasan CS-101
+Brandt     CS-190
+Katz       CS-190
+Srinivasan CS-190
+Brandt     CS-315
+Katz       CS-315
+Srinivasan CS-315
+Brandt     CS-319
+Katz       CS-319
+
+NAME       COURSE_ID
+---------- --------------------
+Srinivasan CS-319
+Brandt     CS-347
+Katz       CS-347
+Srinivasan CS-347
+
+15 rows selected.
+
+7.
+SQL> SELECT *
+  2  FROM course
+  3  WHERE title LIKE 'Intro%';
+
+COURSE_ID            TITLE                          DEPT_NAME     CREDITS
+-------------------- ------------------------------ ---------- ----------
+BIO-101              Intro.to Biology               Biology             4
+CS-101               Intro.to Computer Science      Comp.Sci.           4
+EE-181               Intro.to Digital Systems       Elec.Eng.           3
+
+8.
+SQL> SELECT *
+  2  FROM course
+  3  WHERE title LIKE '%Comp%';
+
+COURSE_ID            TITLE                          DEPT_NAME     CREDITS
+-------------------- ------------------------------ ---------- ----------
+CS-101               Intro.to Computer Science      Comp.Sci.           4
+
+9.SQL> SELECT *
+  2  FROM student
+  3  WHERE name LIKE '___';
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+     76653 Aoi                  Elec.Eng.          60 10-MAY-10
+
+10.SQL> SELECT *
+  2  FROM instructor
+  3  WHERE name LIKE '___%';
+
+        ID NAME       DEPT_NAME      SALARY
+---------- ---------- ---------- ----------
+     10101 Srinivasan Comp.Sci.       75075
+     15151 Mozart     Music           46200
+     22222 Einstein   Physics        104500
+     32343 El Said    History         69300
+     33456 Gold       Physics         95700
+     45565 Katz       Comp.Sci.       82500
+     58583 Califieri  History         71610
+     76766 Crick      Biology         83160
+     83821 Brandt     Comp.Sci.      101200
+     98345 Kim        Elec.Eng.       88000
+
+10 rows selected.
+
+//5th QUESTIONS
+1.
+SQL> SELECT SUM(salary),MAX(salary),MIN(salary),AVG(salary)
+  2  FROM instructor;
+
+SUM(SALARY) MAX(SALARY) MIN(SALARY) AVG(SALARY)
+----------- ----------- ----------- -----------
+     916245      104500       46200       83295
+2.
+SQL> SELECT SUM(salary),MAX(salary),MIN(salary),AVG(salary)
+  2  FROM instructor
+  3  WHERE dept_name='History';
+
+SUM(SALARY) MAX(SALARY) MIN(SALARY) AVG(SALARY)
+----------- ----------- ----------- -----------
+     140910       71610       69300       70455
+3.
+SQL> SELECT COUNT(*)
+  2  FROM instructor;
+
+  COUNT(*)
+----------
+        11
+4.
+SQL> SELECT COUNT(*)
+  2  FROM instructor
+  3  WHERE dept_name='Comp.Sci.';
+
+  COUNT(*)
+----------
+         3
+5.
+SQL> SELECT DISTINCT COUNT(salary)
+  2  FROM instructor
+  3  ;
+
+COUNT(SALARY)
+-------------
+           11
+
+//NESTED QUERIES
+1.
+SQL> SELECT title
+  2  FROM course
+  3  WHERE course_id IN( SELECT course_id FROM section WHERE (semester='Fall' AND year=2009) AND course_id IN(SELECT course_id FROM section WHERE(semester='Spring' AND year=2010)));
+
+TITLE
+------------------------------
+Intro.to Computer Science
+
+2.
+SQL> SELECT title
+  2  FROM course
+  3  WHERE course_id IN( SELECT course_id FROM section WHERE (semester='Fall' AND year=2009) AND course_id NOT IN(SELECT course_id FROM section WHERE(semester='Spring' AND year=2010)));
+
+TITLE
+------------------------------
+Database System Concepts
+Physical Priciples
+
+4.
+SQL> SELECT name
+  2  FROM instructor
+  3  WHERE salary >ANY(SELECT salary FROM instructor WHERE dept_name='Biology');
+
+NAME
+----------
+Einstein
+Brandt
+Wu
+Gold
+Kim
+
+5.
+SQL> SELECT name
+  2  FROM instructor
+  3  WHERE salary > ALL(SELECT salary FROM instructor WHERE dept_name='Biology');
+
+NAME
+----------
+Kim
+Gold
+Wu
+Brandt
+Einstein
+
+\\TCL commands
+
+1.
+SQL> UPDATE student
+  2  SET name = 'John'
+  3  WHERE id = 44553;
+
+1 row updated.
+
+2.
+SQL> commit;
+
+Commit complete.
+
+3.
+SQL> UPDATE student
+  2  SET name = 'Peltier'
+  3  WHERE id = 44553;
+
+1 row updated.
+
+4.
+SQL> Rollback;
+
+Rollback complete.
+
+5.
+SQL> INSERT INTO student VALUES(211091,'Fayiz','Comp.Sci.',35,'21-MAR-02');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> UPDATE student
+  2  SET tot_cred = 77
+  3  WHERE id = 211091;
+
+1 row updated.
+
+SQL> SAVEPOINT updation;
+
+Savepoint created.
+
+SQL> UPDATE student
+  2  SET name = 'FayizPT'
+  3  WHERE id = 211091;
+
+1 row updated.
+
+SQL> SAVEPOINT updation2;
+
+Savepoint created.
+
+SQL> UPDATE student
+  2  SET dept_name = 'Physics'
+  3  WHERE id = 211091;
+
+1 row updated.
+
+SQL> ROLLBACK TO SAVEPOINT updation2;
+
+Rollback complete.
+
+SQL> ROLLBACK TO SAVEPOINT updation;
+
+Rollback complete.
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+    211091 Fayiz                Comp.Sci.          77 21-MAR-02
+       128 Zhang                Comp.Sci.         102 24-JUL-00
+     12345 Shankar              Comp.Sci.          42 01-JAN-01
+     19991 Brandt               History            80 10-JUN-02
+     23121 Chavez               Finance           110 25-MAY-23
+     44553 John                 Physics            56 30-APR-04
+     45678 Mosart               Physics            56 27-AUG-99
+     54321 Williams             Comp.Sci.          54 01-OCT-06
+     55739 Sanchez              Music              48 07-FEB-95
+     76543 Brown                Comp.Sci.          58 09-MAR-09
+     76653 Aoi                  Elec.Eng.          60 10-MAY-10
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+     98765 Bourikas             Elec.Eng.          98 07-JUN-11
+     98988 Tanaka               Biology           120 08-APR-12
+
+13 rows selected.
+
+\\DCL Commands
+1.
+SQL> GRANT SELECT
+  2  ON student
+  3  TO PUBLIC;
+
+Grant succeeded.
+
+2.
+SQL> GRANT ALL
+  2  ON instructor
+  3  TO PUBLIC;
+
+Grant succeeded.
+
+SQL> commit;
+
+Commit complete.
+
+3.
+SQL> REVOKE SELECT
+  2  ON student
+  3  FROM PUBLIC;
+
+Revoke succeeded.
+
+SQL> REVOKE ALL
+  2  ON instructor
+  3  FROM PUBLIC;
+
+Revoke succeeded.
+
+SQL> commit;
+
+Commit complete.
+
+\\VIEWS AND ASSERTIONS
+ 
+1.SQL> CREATE VIEW Yearwise
+  2  AS
+  3  SELECT *
+  4  FROM section
+  5  WHERE year = 2009;
+
+View created.
+
+SQL> select * from Yearwise
+  2  ;
+
+COURSE_ID      SEC_ID SEMESTER         YEAR BUILDING   ROOM_NUMBER
+---------- ---------- ---------- ---------- ---------- -----------
+BIO-101             1 Summer           2009 Painter            514
+CS-101              1 Fall             2009 Packard            101
+CS-190              1 Spring           2009 Taylor            3128
+CS-190              2 Spring           2009 Taylor            3128
+CS-347              1 Fall             2009 Taylor            3128
+EE-181              1 Spring           2009 Taylor            3128
+PHY-101             1 Fall             2009 Watson             100
+
+7 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+2.
+ SQL> CREATE VIEW Studentlist
+  2  AS
+  3  SELECT * FROM student
+  4  ORDER BY name;
+
+View created.
+
+SQL> select * from Studentlist;
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+     76653 Aoi                  Elec.Eng.          60 10-MAY-10
+     98765 Bourikas             Elec.Eng.          98 07-JUN-11
+     19991 Brandt               History            80 10-JUN-02
+     76543 Brown                Comp.Sci.          58 09-MAR-09
+     23121 Chavez               Finance           110 25-MAY-23
+    211091 Fayiz                Comp.Sci.          77 21-MAR-02
+     44553 John                 Physics            56 30-APR-04
+     45678 Mosart               Physics            56 27-AUG-99
+     55739 Sanchez              Music              48 07-FEB-95
+     12345 Shankar              Comp.Sci.          42 01-JAN-01
+     98988 Tanaka               Biology           120 08-APR-12
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+     54321 Williams             Comp.Sci.          54 01-OCT-06
+       128 Zhang                Comp.Sci.         102 24-JUL-00
+
+13 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+3.
+SQL> CREATE VIEW Teacher
+  2  AS
+  3  SELECT *
+  4  FROM instructor
+  5  WHERE id NOT IN(SELECT DISTINCT id FROM teaches);
+
+View created.
+
+SQL> select * from teacher
+  2  ;
+
+        ID NAME       DEPT_NAME      SALARY
+---------- ---------- ---------- ----------
+     33456 Gold       Physics         95700
+     58583 Califieri  History         71610
+
+4.
+SQL> INSERT INTO Studentlist VALUES(20023,'Robert','Comp.Sci.',32,'29-SEP-23');
+
+1 row created.
+
+SQL> UPDATE Studentlist
+  2  SET name = 'Saviour'
+  3  WHERE id = 20023;
+
+1 row updated.
+
+SQL> commit;
+
+Commit complete.
+
+5.
+SQL> DELETE FROM Studentlist
+  2  WHERE id = 20023;
+
+1 row deleted.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from Studentlist;
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+     76653 Aoi                  Elec.Eng.          60 10-MAY-10
+     98765 Bourikas             Elec.Eng.          98 07-JUN-11
+     19991 Brandt               History            80 10-JUN-02
+     76543 Brown                Comp.Sci.          58 09-MAR-09
+     23121 Chavez               Finance           110 25-MAY-23
+    211091 Fayiz                Comp.Sci.          77 21-MAR-02
+     44553 John                 Physics            56 30-APR-04
+     45678 Mosart               Physics            56 27-AUG-99
+     55739 Sanchez              Music              48 07-FEB-95
+     12345 Shankar              Comp.Sci.          42 01-JAN-01
+     98988 Tanaka               Biology           120 08-APR-12
+
+        ID NAME                 DEPT_NAME    TOT_CRED DAT_E
+---------- -------------------- ---------- ---------- ---------
+     54321 Williams             Comp.Sci.          54 01-OCT-06
+       128 Zhang                Comp.Sci.         102 24-JUL-00
+
+13 rows selected.
+
+6.
+SQL> DROP VIEW Studentlist;
+
+View dropped.
+
+SQL> commit;
+
+Commit complete.
+
+\\BUILT IN FUNCTIONS
+
+1.
+ a)
+ SQL> SELECT ROUND(COS(ABS(-10))*EXP(2))
+  2  AS FROM DUAL;
+
+ROUND(COS(ABS(-10))*EXP(2))AS
+-----------------------------
+                           -6
+b)
+SQL> SELECT ROUND(LOG(10,SQRT(MOD(POWER(5,4),14))),2) AS FROM DUAL;
+
+ROUND(LOG(10,SQRT(MOD(POWER(5,4),14))),2)AS
+-------------------------------------------
+                                        .48
+c)
+
+SQL> SELECT SIN(30)+TAN(60) AS FROM DUAL;
+
+SIN(30)+TAN(60)AS
+-----------------
+       -.66799123
+
+2.SQL> SELECT CEIL(12.9) AS leastsucceeding,FLOOR(12.9) AS greatestpreceding FROM DUAL;
+
+LEASTSUCCEEDING GREATESTPRECEDING
+--------------- -----------------
+             13                12
+
+3.
+SQL> SELECT LOWER(name) FROM instructor;
+
+LOWER(NAME
+----------
+srinivasan
+wu
+mozart
+einstein
+el said
+gold
+katz
+califieri
+crick
+brandt
+kim
+
+11 rows selected.
+
+SQL> SELECT UPPER(name) FROM instructor;
+
+UPPER(NAME
+----------
+SRINIVASAN
+WU
+MOZART
+EINSTEIN
+EL SAID
+GOLD
+KATZ
+CALIFIERI
+CRICK
+BRANDT
+KIM
+
+11 rows selected.
+
+SQL> SELECT INITCAP(name) FROM instructor;
+
+INITCAP(NA
+----------
+Srinivasan
+Wu
+Mozart
+Einstein
+El Said
+Gold
+Katz
+Califieri
+Crick
+Brandt
+Kim
+
+11 rows selected.
+
+4.
+SQL> SELECT REPLACE(course_id,'-','/') FROM COURSE;
+
+REPLACE(COURSE_ID,'-
+--------------------
+BIO/101
+BIO/301
+CS/101
+CS/190
+CS/315
+CS/319
+CS/347
+EE/181
+FIN/201
+HIS/351
+MU/199
+
+REPLACE(COURSE_ID,'-
+--------------------
+PHY/101
+
+12 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+5.
+SQL> SELECT CONCAT(name,dept_name) AS FULLNAME
+  2  FROM instructor;
+
+FULLNAME
+--------------------
+SrinivasanComp.Sci.
+WuFinance
+MozartMusic
+EinsteinPhysics
+El SaidHistory
+GoldPhysics
+KatzComp.Sci.
+CalifieriHistory
+CrickBiology
+BrandtComp.Sci.
+KimElec.Eng.
+
+11 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> SELECT CONCAT(name,CONCAT(' ',dept_name)) AS FULLNAME
+  2  FROM instructor;
+
+FULLNAME
+---------------------
+Srinivasan Comp.Sci.
+Wu Finance
+Mozart Music
+Einstein Physics
+El Said History
+Gold Physics
+Katz Comp.Sci.
+Califieri History
+Crick Biology
+Brandt Comp.Sci.
+Kim Elec.Eng.
+
+11 rows selected.
+
+6.
+SQL> SELECT SUBSTR(course_id,-3) FROM course;
+
+SUB
+---
+101
+301
+101
+190
+315
+319
+347
+181
+201
+351
+199
+
+SUB
+---
+101
+
+12 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+//HAVING AND GROUPBY
+
+1.
+SQL> SELECT d.dept_name AS "department_name" ,COUNT(i.id) AS "no_of_instructors",AVG(i.salary) AS "avg_salary"
+  2  FROM department d
+  3  JOIN instructor i ON d.dept_name = i.dept_name
+  4  GROUP BY d.dept_name;
+
+department no_of_instructors avg_salary
+---------- ----------------- ----------
+Physics                    2     100100
+Finance                    1      99000
+Elec.Eng.                  1      88000
+Comp.Sci.                  3 86258.3333
+Biology                    1      83160
+Music                      1      46200
+History                    2      70455
+
+7 rows selected.
+
+2.
+
+SQL> SELECT course_id,semester,COUNT(DISTINCT id) AS "Number of Students"
+  2  FROM subject
+  3  GROUP BY course_id,semester;
+
+COURSE_ID  SEMESTER   Number of Students
+---------- ---------- ------------------
+CS-101     Spring                      1
+EE-181     Spring                      1
+FIN-201    Spring                      1
+CS-347     FAll                        1
+CS-190     Spring                      2
+CS-315     Spring                      2
+HIS-351    Spring                      1
+CS-319     Spring                      2
+BIO-301    Summer                      1
+CS-347     Fall                        1
+PHY-101    Fall                        1
+
+COURSE_ID  SEMESTER   Number of Students
+---------- ---------- ------------------
+CS-101     Fall                        6
+BIO-101    Summer                      1
+MU-199     Spring                      1
+
+14 rows selected.
+
+3.
+SQL> SELECT c.course_id,t.semester,COUNT(t.id) AS "Number of Students"
+  2  FROM course c
+  3  JOIN subject t ON c.course_id = t.course_id
+  4  GROUP BY c.course_id,t.semester
+  5  HAVING COUNT(t.id) > 2;
+
+COURSE_ID  SEMESTER   Number of Students
+---------- ---------- ------------------
+CS-101     Fall                        6
+
+4.
+SQL> SELECT t.course_id,i.name,i.dept_name,
+  2  COUNT(t.course_id) AS "Number of Courses"
+  3  FROM teaches t
+  4  JOIN instructor i ON i.id = t.id
+  5  GROUP BY t.course_id,i.name,i.dept_name;
+
+COURSE_ID  NAME       DEPT_NAME  Number of Courses
+---------- ---------- ---------- -----------------
+CS-101     Srinivasan Comp.Sci.                  1
+CS-315     Srinivasan Comp.Sci.                  1
+CS-101     Katz       Comp.Sci.                  1
+BIO-101    Crick      Biology                    1
+MU-199     Mozart     Music                      1
+BIO-301    Crick      Biology                    1
+EE-181     Kim        Elec.Eng.                  1
+CS-319     Katz       Comp.Sci.                  1
+CS-319     Brandt     Comp.Sci.                  1
+CS-347     Srinivasan Comp.Sci.                  1
+FIN-201    Wu         Finance                    1
+
+COURSE_ID  NAME       DEPT_NAME  Number of Courses
+---------- ---------- ---------- -----------------
+CS-190     Brandt     Comp.Sci.                  2
+HIS-351    El Said    History                    1
+PHY-101    Einstein   Physics                    1
+
+14 rows selected.
+
+5.
+SQL> SELECT dept_name,COUNT(name) AS "instructor ABOVE 80000"
+  2  FROM instructor
+  3  WHERE salary > 80000
+  4  GROUP BY dept_name
+  5  HAVING COUNT(name) > 2;
+
+no rows selected
+
+
+CYCLE 2
+
+1.
+SQL> sql
+SP2-0042: unknown command "sql" - rest of line ignored.
+SQL> DECLARE
+  2      message VARCHAR2(100);
+  3  BEGIN
+  4      message:= 'Hello World';
+  5      DBMS_OUTPUT.PUT_LINE(message);
+  6  END;
+  7  /
+Hello World
+
+PL/SQL procedure successfully completed.
+
+2.
+SQL> sql
+SP2-0042: unknown command "sql" - rest of line ignored.
+SQL> DECLARE
+  2       score NUMBER := 85;
+  3       grade VARCHAR2(2);
+  4  BEGIN
+  5    IF score > 90 THEN grade := 'A';
+  6    ELSIF score >= 80 THEN grade := 'B';
+  7    ELSIF score >= 70 THEN grade := 'C';
+  8    ELSIF score >= 60 THEN grade := 'D' ;
+  9    ELSE grade := 'F';
+ 10  END IF;
+ 11  DBMS_OUTPUT.PUT_LINE('Grade :' || grade);
+ 12  END;
+ 13  /
+Grade :B
+
+PL/SQL procedure successfully completed.
+
+3.
+SQL> sql
+SP2-0042: unknown command "sql" - rest of line ignored.
+SQL> DECLARE
+  2     TYPE SubjectMarks IS VARRAY(2) OF NUMBER;
+  3     TYPE StudentRecord IS TABLE OF SubjectMarks INDEX BY PLS_INTEGER;
+  4     StudentMarks StudentRecord;
+  5     total_marks NUMBER := 0;
+  6  BEGIN
+  7     StudentMarks(1) := SubjectMarks(85,90);
+  8     StudentMarks(2) := SubjectMarks(78,88);
+  9     StudentMarks(3) := SubjectMarks(80,89);
+ 10     StudentMarks(4) := SubjectMarks(60,77);
+ 11     StudentMarks(5) := SubjectMarks(85,93);
+ 12  FOR i in 1..5 LOOP
+ 13     total_marks := StudentMarks(i)(1) + StudentMarks(i)(2);
+ 14     DBMS_OUTPUT.PUT_LINE('Student' || i || 'TOTAL Marks :' || total_marks);
+ 15  END LOOP;
+ 16  END;
+ 17  /
+Student1TOTAL Marks :175
+Student2TOTAL Marks :166
+Student3TOTAL Marks :169
+Student4TOTAL Marks :137
+Student5TOTAL Marks :178
+
+PL/SQL procedure successfully completed.
+
+4.
+SQL> sql
+SP2-0042: unknown command "sql" - rest of line ignored.
+SQL> DECLARE
+  2    NUM NUMBER := 5;
+  3    factorial NUMBER := 1;
+  4  BEGIN
+  5  WHILE num > 0 LOOP
+  6     factorial := factorial*num;
+  7     num := num - 1;
+  8  END LOOP;
+  9  DBMS_OUTPUT.PUT_LINE('Factorial =' || factorial);
+ 10  END;
+ 11  /
+Factorial =120
+
+PL/SQL procedure successfully completed.
+
+5.
+SQL> sql
+SP2-0042: unknown command "sql" - rest of line ignored.
+SQL> DECLARE
+  2      multiplier NUMBER := 3;
+  3      result NUMBER;
+  4  BEGIN
+  5  FOR i in 1..10 LOOP
+  6      result := i * multiplier;
+  7      DBMS_OUTPUT.PUT_LINE(i || '*' || multiplier || '=' || result);
+  8  END LOOP;
+  9  END;
+ 10  /
+1*3=3
+2*3=6
+3*3=9
+4*3=12
+5*3=15
+6*3=18
+7*3=21
+8*3=24
+9*3=27
+10*3=30
+
+PL/SQL procedure successfully completed.
+
+6.

@@ -1,0 +1,7 @@
+create or replace trigger trig1 
+before update on borrowedbooks
+for each row
+begin
+ dbms_output.put_line('updated successfully');
+end;
+/
